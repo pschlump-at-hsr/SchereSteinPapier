@@ -1,0 +1,9 @@
+{
+  "name": "schereSteinServerNode",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {},
+  "scripts": {
+    "start": "node --experimental-modules --es-module-specifier-resolution=node schereSteinServer.js"
+  }
+}
