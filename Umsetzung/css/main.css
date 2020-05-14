@@ -30,7 +30,7 @@ main {
   text-align: center;
 }
 main div {
-  padding: 20px 0px 20px 0px;
+  padding: 20px 0 20px 0;
 
 }
 #ranking {
@@ -39,12 +39,12 @@ main div {
 .column {
   float: left;
   width: 49.5%;
-  padding: 0px;
+  padding: 0;
   height: 100%;
   overflow: hidden;
 }
 .row {
-  padding: 0px;
+  padding: 0;
   position: absolute;
   top: 200px;
   bottom: 100px;
@@ -63,7 +63,7 @@ main div {
   width: 100%;
 }
 h1 {
-  margin: 0px;
+  margin: 0;
   padding: 10px;
 }
 
@@ -76,11 +76,11 @@ header, footer {
   width: 100%;
 }
 header {
-  top: 0px;
+  top: 0;
 }
 
 footer {
-  bottom: 0px;
+  bottom: 0;
 }
 
 ul {
@@ -107,7 +107,22 @@ button {
   transition-duration: 0.4s;
   border: 3px solid seagreen;
 }
-
+.selector {
+  background-color: white;
+  color: black;
+  border: 3px solid slategrey;
+  width: auto;
+  padding: 10px 10px;
+  margin: 0;
+}
+.selector:hover {
+  color: steelblue;
+  background-color: aliceblue;
+}
+.selector:focus {
+  background-color: steelblue;
+  color: darkblue;
+}
 button:hover {
   background-color: white;
   color: black;

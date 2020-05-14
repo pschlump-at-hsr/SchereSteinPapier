@@ -34,7 +34,7 @@
     <div class="row">
       <div id="ranking" class="column">
         <h1>Rangliste</h1>
-        <ul>
+        <ul id="entries">
           <li>
             <h2>1. Rang mit 22 Punkten</h2>
             <p>Spieler</p>
@@ -48,8 +48,17 @@
     <div id="game" class="column">
       <p>Starten Sie ein neues Spiel</p>
       <label for="name">Name:</label>
-      <input type="text" name="Name" id="name"><br>
-      <button type="button" name="start_game" onclick="start_game(document.getElementById('name').value)">Spiel Starten</button>
+      <input type="text" name="Name" id="name" minlength="3"><br>
+      <span id="errmsg"></span><br>
+      <button type="button" id="startGame">Spiel Starten</button>
+      <div id="gamble">
+        <span><b id="gamer">Spieler</b>! wähle deine Hand</span><br>
+        <button type="button" id="scissor" class="selector">Schere</button>
+        <button type="button" id="stone" class="selector">Stein</button>
+        <button type="button" id="paper" class="selector">Papier</button>
+        <button type="button" id="well" class="selector">Brunnen</button>
+        <button type="button" id="match" class="selector">Streichholz</button>
+      </div>
     </div>
     </div>
     <footer>
