@@ -1,4 +1,12 @@
 let player = new Map();
+let activePlayer;
+const gameMatrix = [
+  [0,1,-1,-1,1],
+  [-1,0,1,-1,1],
+  [1,-1,0,1,-1],
+  [1,1,-1,0,-1],
+  [-1,-1,1,1,0]
+]
 
 function init() {
   if (localStorage.length > 0){
@@ -25,9 +33,45 @@ function init() {
       startGame(playerTextBox.value);
     }
   });
+
+  for(let button of document.getElementsByClassName("selector")) {
+
+    button.addEventListener('click', () => {
+      let playerSelection = button.id;
+      let comSelection = Math.floor(Math.random() * 5);
+      let result = gameMatrix[playerSelection][comSelection];
+      let outcome;
+      console.log("player:" + playerSelection + " COM: " + comSelection + " Result:"+ result);
+      document.getElementById("comResult").value = getComResult(comSelection);
+      switch (result) {
+        case -1: outcome = "Computer hat gewonnen!"; break;
+        case 0: outcome = "Unendschieden"; break;
+        case 1: outcome = activePlayer+" hat gewonnen!";
+        player.set(activePlayer, Number(player.get(activePlayer)) + 1);
+        break;
+      }
+      document.getElementById("outcome").innerText = outcome;
+      displayRanking();
+    });
+  }
 }
-function startGame(activePlayer) {
-  document.getElementById("gamer").innerText = activePlayer;
+
+function getComResult(rng) {
+  let result;
+  switch (rng) {
+    case 0: result = "Schere"; break;
+    case 1: result = "Stein"; break;
+    case 2: result = "Papier"; break;
+    case 3: result = "Brunnen"; break;
+    case 4: result = "Streichholz"; break;
+  }
+  return result;
+}
+
+function startGame(player) {
+  activePlayer = player;
+  document.getElementById("gamer").innerText = player;
+  document.getElementById("gamble").style.display = "block";
 }
 
 function displayRanking() {
@@ -37,9 +81,13 @@ function displayRanking() {
     yield* [...this.entries()].sort((a,b) => b[1]-a[1]);
   }
   for (let [key, value] of player) {
-    console.log("Spieler "+key+" mit "+value+" Siegen");
-   ranking +="<li><h2>" + rank + ". Rang mit "+ value + " Punkten</h2><p>" + key + "</p></li>";
-    rank++;
+    if (rank >= 6) {
+      break;
+    } else {
+      console.log("Spieler " + key + " mit " + value + " Siegen");
+      ranking += "<li><h2>" + rank + ". Rang mit " + value + " Siegen</h2><p>" + key + "</p></li>";
+      rank++;
+    }
   }
   document.getElementById('entries').innerHTML = ranking;
 }
