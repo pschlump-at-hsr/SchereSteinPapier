@@ -18,32 +18,33 @@
 </head>
 
 <body>
-  <!--[if IE]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
+<!--[if IE]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+  your browser</a> to improve your experience and security.</p>
+<![endif]-->
 
-  <!-- Add your site or application content here -->
-  <main>
-    <header>
-      <h1>Schere, Stein, Papier (Brunnen, Streichholz)</h1>
-    </header>
+<!-- Add your site or application content here -->
+<main>
+  <header>
+    <h1>Schere, Stein, Papier (Brunnen, Streichholz)</h1>
+  </header>
 
-    <div id="local_server">
-      <button type="button" name="server">Wechsle zu Server</button>
-    </div>
-    <div class="row">
-      <div id="ranking" class="column">
-        <h1>Rangliste</h1>
-        <ul id="entries">
-          <li>
-            <h2>1. Rang mit 22 Punkten</h2>
-            <p>Spieler</p>
-          </li>
-          <li>
-            <h2>2. Rang mit 1 Punkt</h2>
-            <p>Spieler</p>
-          </li>
-        </ul>
+  <div id="local_server">
+    <button type="button" name="server">Wechsle zu Server</button>
+  </div>
+  <div class="row">
+    <div id="ranking" class="column">
+      <h1>Rangliste</h1>
+      <ul id="entries">
+        <li>
+          <h2>1. Rang mit 22 Punkten</h2>
+          <p>Spieler</p>
+        </li>
+        <li>
+          <h2>2. Rang mit 1 Punkt</h2>
+          <p>Spieler</p>
+        </li>
+      </ul>
     </div>
     <div id="game" class="column">
       <p>Starten Sie ein neues Spiel</p>
@@ -65,16 +66,19 @@
         <label for="comResult">Computer:</label>
         <input type="text" readonly id="comResult">
       </div>
+      <div id="historyTable" class="invisible">
+        <table id="history">
+        </table>
+      </div>
     </div>
-    </div>
-    <footer>
+  </div>
+  <footer>
 
-    </footer>
-  </main>
-  <script src="js/controller.js" type="module"></script>
-  <script src="js/model.js" type="module"></script>
-  <script src="js/view.js" type="module"></script>
-
+  </footer>
+</main>
+<script src="js/controller.js" type="module"></script>
+<script src="js/model.js" type="module"></script>
+<script src="js/view.js" type="module"></script>
 
 
 </body>

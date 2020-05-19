@@ -29,13 +29,16 @@ main {
   overflow: hidden;
   text-align: center;
 }
+
 main div {
   padding: 20px 0 20px 0;
 
 }
+
 #ranking {
   border-right: 2px solid black;
 }
+
 .column {
   float: left;
   width: 49.5%;
@@ -44,6 +47,7 @@ main div {
   overflow: scroll;
   overflow-x: hidden;
 }
+
 .row {
   padding: 0;
   position: absolute;
@@ -57,12 +61,14 @@ main div {
   display: table;
   clear: both;
 }
+
 #local_server {
   border-bottom: 2px solid black;
   top: 100px;
   position: absolute;
   width: 100%;
 }
+
 h1 {
   margin: 0;
   padding: 10px;
@@ -75,6 +81,7 @@ header, footer {
   position: absolute;
   width: 100%;
 }
+
 header {
   top: 0;
   height: 100px;
@@ -90,6 +97,7 @@ ul {
   display: inline-block;
 
 }
+
 #ranking ul li {
   text-align: left;
 }
@@ -100,7 +108,8 @@ li p, h2 {
 }
 
 #game {
- overflow: hidden;
+  overflow: hidden;
+  text-align: center;
 }
 
 button {
@@ -115,6 +124,7 @@ button {
   transition-duration: 0.4s;
   border: 3px solid seagreen;
 }
+
 .selector {
   background-color: white;
   color: black;
@@ -123,21 +133,35 @@ button {
   padding: 10px 10px;
   margin: 0;
 }
+
 .selector:hover {
   color: steelblue;
   background-color: aliceblue;
 }
+
 .selector:focus {
   background-color: steelblue;
   color: darkblue;
 }
+
 button:hover {
   background-color: white;
   color: black;
-
 }
-.enabled {
 
+.disabled button {
+  background-color: #888888;
+  border-color: #888888;
+}
+
+.disabled button:hover {
+  background-color: #888888;
+  border-color: #888888;
+  color: black;
+}
+
+#history {
+  margin: auto;
 }
 
 @media screen and (max-width: 700px) {
@@ -146,9 +170,11 @@ button:hover {
     height: 700px;
     overflow: hidden;
   }
+
   .row {
     overflow: scroll;
   }
+
   #ranking {
     border-right: none;
     border-bottom: 2px solid black;
@@ -292,9 +318,9 @@ textarea {
 }
 
 @media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
   /* Style adjustments for high resolution devices */
 }
 
@@ -314,16 +340,20 @@ textarea {
     box-shadow: none !important;
     text-shadow: none !important;
   }
+
   a,
   a:visited {
     text-decoration: underline;
   }
+
   a[href]:after {
     content: " (" attr(href) ")";
   }
+
   abbr[title]:after {
     content: " (" attr(title) ")";
   }
+
   /*
      * Don't show links that are fragment identifiers,
      * or use the `javascript:` pseudo protocol
@@ -332,14 +362,17 @@ textarea {
   a[href^="javascript:"]:after {
     content: "";
   }
+
   pre {
     white-space: pre-wrap !important;
   }
+
   pre,
   blockquote {
     border: 1px solid #999;
     page-break-inside: avoid;
   }
+
   /*
      * Printing Tables:
      * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
@@ -347,16 +380,19 @@ textarea {
   thead {
     display: table-header-group;
   }
+
   tr,
   img {
     page-break-inside: avoid;
   }
+
   p,
   h2,
   h3 {
     orphans: 3;
     widows: 3;
   }
+
   h2,
   h3 {
     page-break-after: avoid;

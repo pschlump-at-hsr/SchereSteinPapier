@@ -1,6 +1,6 @@
 "use strict"
-
 let players = new Map();
+let history;
 let activePlayer;
 const gameMatrix = [
   [0, 1, -1, -1, 1],
@@ -28,6 +28,7 @@ function getSortedPlayersMap() {
 
 export function initNewGameSession(updateView, viewState) {
   let playerName = document.getElementById('name').value;
+  history = new Map();
   let errMsg = "";
   if (playerName < 3) {
     errMsg = "Mindestens 3 Zeichen eingeben!";
@@ -45,7 +46,7 @@ export function initNewGameSession(updateView, viewState) {
   updateView();
 }
 
-function getComResult(rng) {
+function getResultText(rng) {
   let result;
   switch (rng) {
     case 0:
@@ -69,23 +70,30 @@ function getComResult(rng) {
 
 export function getOutcome(playerSelection, viewState) {
   let comSelection = Math.floor(Math.random() * 5);
+  let comResult = getResultText(comSelection);
   let result = gameMatrix[playerSelection][comSelection];
+  let resultIcon;
   let outcome;
-  viewState.comResult = getComResult(comSelection);
+  viewState.comResult = comResult;
   switch (result) {
     case -1:
       outcome = "Computer hat gewonnen!";
+      resultIcon = "&#10062";
       break;
     case 0:
       outcome = "Unentschieden";
+      resultIcon = "&#9868";
       break;
     case 1:
       outcome = activePlayer + " hat gewonnen!";
+      resultIcon = "&#9989;";
       players.set(activePlayer, String(Number(players.get(activePlayer)) + 1));
       localStorage.setItem(activePlayer, players.get(activePlayer));
       setRankingOutput(viewState);
       break;
   }
+  history.set(history.size,{res:resultIcon, playerSelection:getResultText(Number(playerSelection)), comSelection:comResult});
+  setHistoryOutput(viewState);
   viewState.outcome = outcome;
 }
 
@@ -106,5 +114,12 @@ export function setRankingOutput(viewState) {
       previousValue = value;
       nrOfPlayers++;
     }
+  }
+}
+
+function setHistoryOutput(viewState) {
+  viewState.history = "<tr><th>Resultat</th><th>Spieler</th><th>Gegner</th></tr>";
+  for(let [key,value] of history){
+    viewState.history += "<tr><td>"+value.res+"</td><td>"+value.playerSelection+"</td><td>"+value.comSelection+"</td></tr>";
   }
 }
