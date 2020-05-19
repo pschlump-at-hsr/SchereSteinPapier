@@ -48,18 +48,20 @@
     <div id="game" class="column">
       <p>Starten Sie ein neues Spiel</p>
       <label for="name">Name:</label>
-      <input type="text" name="Name" id="name" minlength="3"><br>
-      <span id="errmsg"></span><br>
+      <input type="text" name="Name" id="name" minlength="3">
+      <p id="errmsg"></p>
       <button type="button" id="startGame">Spiel Starten</button>
-      <div id="gamble">
-        <span><b id="gamer">Spieler</b>! wähle deine Hand</span><br>
+      <div id="player" class="invisible">
+        <p><b id="playerLabel">Spieler</b>! wähle deine Hand</p>
         <button type="button" id="0" class="selector">Schere</button>
         <button type="button" id="1" class="selector">Stein</button>
         <button type="button" id="2" class="selector">Papier</button>
         <button type="button" id="3" class="selector">Brunnen</button>
-        <button type="button" id="4" class="selector">Streichholz</button><br>
-        <span id="outcome"></span><br>
-        <span id="nextRound">Nächste Runde in 5</span><br>
+        <button type="button" id="4" class="selector">Streichholz</button>
+      </div>
+      <div id="computer" class="invisible">
+        <p id="outcome"></p>
+        <p id="nextRound">Nächste Runde in <span id="countDown">5</span> Sekunden</p>
         <label for="comResult">Computer:</label>
         <input type="text" readonly id="comResult">
       </div>
@@ -69,11 +71,11 @@
 
     </footer>
   </main>
-  <script src="js/vendor/modernizr-3.8.0.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/controller.js" type="module"></script>
+  <script src="js/model.js" type="module"></script>
+  <script src="js/view.js" type="module"></script>
+
+
 
 </body>
 
