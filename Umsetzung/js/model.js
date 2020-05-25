@@ -1,7 +1,8 @@
 "use strict"
+
 let players = new Map();
 let history;
-let activePlayer;
+export let activePlayer;
 const gameMatrix = [
   [0, 1, -1, -1, 1],
   [-1, 0, 1, -1, 1],
@@ -9,24 +10,34 @@ const gameMatrix = [
   [1, 1, -1, 0, -1],
   [-1, -1, 1, 1, 0]
 ]
+export let viewState = {
+  ranking: "",
+  errMsg: "",
+  outcome: "",
+  oldState: "invisible",
+  newState: "invisible",
+  activePlayer: "",
+  comResult: "",
+  history: "<tr><th>Resultat</th><th>Spieler</th><th>Gegner</th></tr>",
+  online: "Server"
+}
 
 export function loadPlayersFromStorage() {
   if (localStorage.length > 0) {
     for (let i = 0; i < localStorage.length; i++) {
-      console.log("Spieler " + localStorage.key(i) + " mit " + localStorage.getItem(localStorage.key(i)) + " Punkten hinzugefügt");
-      players.set(localStorage.key(i), localStorage.getItem(localStorage.key(i)));
+      players.set(localStorage.key(i), Number(localStorage.getItem(localStorage.key(i))));
     }
   }
 }
 
-function getSortedPlayersMap() {
-  players[Symbol.iterator] = function* () {
-    yield* [...this.entries()].sort((a, b) => b[1] - a[1]);
+function getSortedPlayersMap(unsortedMap) {
+  unsortedMap[Symbol.iterator] = function* () {
+    yield* [...this.entries()].sort((a, b) => typeof b[1].win === 'undefined' ? b[1] - a[1] : b[1].win - a[1].win);
   }
-  return players;
+  return unsortedMap;
 }
 
-export function initNewGameSession(updateView, viewState) {
+export function initNewGameSession(updateView) {
   let playerName = document.getElementById('name').value;
   history = new Map();
   let errMsg = "";
@@ -43,10 +54,10 @@ export function initNewGameSession(updateView, viewState) {
     viewState.newState = "enabled";
   }
   viewState.errMsg = errMsg;
-  updateView();
+  updateView(viewState);
 }
 
-function getResultText(rng) {
+export function getResultText(rng) {
   let result;
   switch (rng) {
     case 0:
@@ -68,12 +79,8 @@ function getResultText(rng) {
   return result;
 }
 
-export function getOutcome(playerSelection, viewState) {
-  let comSelection = Math.floor(Math.random() * 5);
-  let comResult = getResultText(comSelection);
-  let result = gameMatrix[playerSelection][comSelection];
-  let resultIcon;
-  let outcome;
+export function displayOutcome(comResult, result, playerSelection, updateView) {
+  let resultIcon, outcome;
   viewState.comResult = comResult;
   switch (result) {
     case -1:
@@ -89,37 +96,56 @@ export function getOutcome(playerSelection, viewState) {
       resultIcon = "&#9989;";
       players.set(activePlayer, String(Number(players.get(activePlayer)) + 1));
       localStorage.setItem(activePlayer, players.get(activePlayer));
-      setRankingOutput(viewState);
       break;
   }
-  history.set(history.size,{res:resultIcon, playerSelection:getResultText(Number(playerSelection)), comSelection:comResult});
+  history.set(history.size, {
+    res: resultIcon,
+    playerSelection: playerSelection,
+    comSelection: comResult
+  });
   setHistoryOutput(viewState);
   viewState.outcome = outcome;
+  updateView(viewState);
 }
 
-export function setRankingOutput(viewState) {
+export function getOutcome(playerSelection, updateView) {
+  let comSelection = Math.floor(Math.random() * 5);
+  let comResult = getResultText(comSelection);
+  let result = gameMatrix[playerSelection][comSelection];
+  displayOutcome(comResult, result, getResultText(Number(playerSelection)),updateView);
+}
+
+export function setRankingOutput(updateView, map = players) {
   viewState.ranking = "";
   let rank = 0;
   let nrOfPlayers = 0;
   let previousValue = 0;
-  const players = getSortedPlayersMap();
-  for (let [key, value] of players) {
+  let correctedValue = 0;
+  let sortedMap = getSortedPlayersMap(map);
+  for (let [key, value] of sortedMap) {
     if (nrOfPlayers >= 10) {
       break;
     } else {
       if (previousValue !== value) {
         rank++;
       }
-      viewState.ranking += "<li><h2>" + rank + ". Rang mit " + value + " Siegen</h2><p>" + key + "</p></li>";
+      if (typeof value.win === 'undefined') {
+        correctedValue = value;
+      } else {
+        correctedValue = value.win;
+      }
+      viewState.ranking += "<li><h2>" + rank + ". Rang mit " + correctedValue + " Siegen</h2><p>" + escape(key) + "</p></li>";
       previousValue = value;
       nrOfPlayers++;
     }
   }
+  updateView(viewState);
 }
 
-function setHistoryOutput(viewState) {
+function setHistoryOutput() {
   viewState.history = "<tr><th>Resultat</th><th>Spieler</th><th>Gegner</th></tr>";
-  for(let [key,value] of history){
-    viewState.history += "<tr><td>"+value.res+"</td><td>"+value.playerSelection+"</td><td>"+value.comSelection+"</td></tr>";
+  //key is not used, but necessary for it to work
+  for (let [key, value] of history) {
+    viewState.history += "<tr><td>" + value.res + "</td><td>" + value.playerSelection + "</td><td>" + value.comSelection + "</td></tr>";
   }
 }

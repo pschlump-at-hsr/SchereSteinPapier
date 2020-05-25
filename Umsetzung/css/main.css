@@ -62,7 +62,7 @@ main div {
   clear: both;
 }
 
-#local_server {
+#localServer {
   border-bottom: 2px solid black;
   top: 100px;
   position: absolute;
@@ -115,14 +115,21 @@ li p, h2 {
 button {
   color: white;
   font-weight: bold;
-  background-color: seagreen;
   text-align: center;
   cursor: pointer;
   padding: 8px 10px;
   width: 300px;
   margin: 10px;
   transition-duration: 0.4s;
+}
+
+.local {
   border: 3px solid seagreen;
+  background-color: seagreen;
+}
+.server {
+  border: 3px solid darkred;
+  background-color: darkred;
 }
 
 .selector {

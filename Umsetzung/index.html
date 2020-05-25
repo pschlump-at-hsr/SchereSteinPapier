@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Schere, Stein, Papier (Brunnen, Streichholz)</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -29,8 +29,8 @@
     <h1>Schere, Stein, Papier (Brunnen, Streichholz)</h1>
   </header>
 
-  <div id="local_server">
-    <button type="button" name="server">Wechsle zu Server</button>
+  <div id="localServer">
+    <button type="button" name="server" id="goOnline" class="local">Wechsle zu <span id="serverSwitch">Server</span></button>
   </div>
   <div class="row">
     <div id="ranking" class="column">
@@ -51,7 +51,7 @@
       <label for="name">Name:</label>
       <input type="text" name="Name" id="name" minlength="3">
       <p id="errmsg"></p>
-      <button type="button" id="startGame">Spiel Starten</button>
+      <button type="button" id="startGame" class="local">Spiel Starten</button>
       <div id="player" class="invisible">
         <p><b id="playerLabel">Spieler</b>! wähle deine Hand</p>
         <button type="button" id="0" class="selector">Schere</button>
@@ -73,12 +73,12 @@
     </div>
   </div>
   <footer>
-
   </footer>
 </main>
 <script src="js/controller.js" type="module"></script>
-<script src="js/model.js" type="module"></script>
 <script src="js/view.js" type="module"></script>
+<script src="js/model.js" type="module"></script>
+<script src="js/DataService.js" type="module"></script>
 
 
 </body>
