@@ -29,13 +29,13 @@
     <h1>Schere, Stein, Papier (Brunnen, Streichholz)</h1>
   </header>
 
-  <div id="localServer">
-    <button type="button" name="server" id="goOnline" class="local">Wechsle zu <span id="serverSwitch">Server</span></button>
+  <div id="local-server-div">
+    <button type="button" name="server" id="go-online-button" class="local">Wechsle zu <span id="server-switch-span">Server</span></button>
   </div>
   <div class="row">
-    <div id="ranking" class="column">
+    <div id="ranking-div" class="column">
       <h1>Rangliste</h1>
-      <ul id="entries">
+      <ul id="entries-ulist">
         <li>
           <h2>1. Rang mit 22 Punkten</h2>
           <p>Spieler</p>
@@ -46,28 +46,28 @@
         </li>
       </ul>
     </div>
-    <div id="game" class="column">
+    <div id="game-div" class="column">
       <p>Starten Sie ein neues Spiel</p>
-      <label for="name">Name:</label>
-      <input type="text" name="Name" id="name" minlength="3">
-      <p id="errmsg"></p>
-      <button type="button" id="startGame" class="local">Spiel Starten</button>
-      <div id="player" class="invisible">
-        <p><b id="playerLabel">Spieler</b>! wähle deine Hand</p>
-        <button type="button" id="0" class="selector">Schere</button>
-        <button type="button" id="1" class="selector">Stein</button>
-        <button type="button" id="2" class="selector">Papier</button>
-        <button type="button" id="3" class="selector">Brunnen</button>
-        <button type="button" id="4" class="selector">Streichholz</button>
+      <label for="name-input">Name:</label>
+      <input type="text" name="Name" id="name-input" minlength="3">
+      <p id="err-msg"></p>
+      <button type="button" id="start-game-button" class="local">Spiel Starten</button>
+      <div id="player-div" class="invisible selector">
+        <p><b id="player-label">Spieler</b>! wähle deine Hand</p>
+        <button type="button" id="0">Schere</button>
+        <button type="button" id="1">Stein</button>
+        <button type="button" id="2">Papier</button>
+        <button type="button" id="3">Brunnen</button>
+        <button type="button" id="4">Streichholz</button>
       </div>
-      <div id="computer" class="invisible">
+      <div id="computer-div" class="invisible">
         <p id="outcome"></p>
-        <p id="nextRound">Nächste Runde in <span id="countDown">5</span> Sekunden</p>
-        <label for="comResult">Computer:</label>
-        <input type="text" readonly id="comResult">
+        <p id="next-round-text">Nächste Runde in <span id="count-down-span">3</span> Sekunden</p>
+        <label for="com-result-input">Computer:</label>
+        <input type="text" readonly id="com-result-input">
       </div>
-      <div id="historyTable" class="invisible">
-        <table id="history">
+      <div id="history-table-div" class="invisible">
+        <table id="history-table">
         </table>
       </div>
     </div>

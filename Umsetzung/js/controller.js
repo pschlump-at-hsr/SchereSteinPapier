@@ -3,7 +3,7 @@ import * as model from './model.js';
 import {updateView} from "./view.js";
 import {initView} from "./view.js";
 import * as data from './DataService.js';
-
+let name, player, goOnline, startGame;
 function reset() {
   model.viewState.history = "";
   model.viewState.activePlayer = "";
@@ -11,42 +11,37 @@ function reset() {
 }
 
 function init() {
+  name = document.getElementById('name-input');
+  startGame = document.getElementById('start-game-button');
+  goOnline = document.getElementById('go-online-button');
+  player = document.getElementById('player-div');
   initView();
   model.loadPlayersFromStorage();
-  model.setRankingOutput(updateView);
-  updateView(model.viewState);
-  document.getElementById('startGame').addEventListener('click', () => model.initNewGameSession(updateView));
-  document.getElementById('goOnline').addEventListener('click', () => {
+  data.getRank(model.setRankingOutput, updateView);
+
+  startGame.addEventListener('click', () => model.initNewGameSession(updateView, name.value));
+
+  goOnline.addEventListener('click', () => {
     if (data.dataState.online) {
-      data.dataState.online = false;
       model.viewState.online = "Server";
-      reset();
-      model.setRankingOutput(updateView);
+      data.dataState.online = false;
     } else {
       model.viewState.online = "Lokal";
-      reset();
       data.dataState.online = true;
-      data.getRank(model.setRankingOutput, updateView);
     }
+    reset();
+    data.getRank(model.setRankingOutput, updateView);
+  });
+
+  player.addEventListener('click', (event) => {
+    let playerSelection = event.target.id;
+    data.getOutcome(Number(playerSelection), model.activePlayer, model.displayOutcome, updateView);
+    data.getRank(model.setRankingOutput, updateView);
+    model.viewState.newState = "disabled";
+    updateView(model.viewState);
 
   });
 
-  for (let button of document.getElementsByClassName("selector")) {
-
-    button.addEventListener('click', () => {
-      let playerSelection = button.id;
-      if (data.dataState.online) {
-        data.getServerSelection(model.getResultText(Number(playerSelection)), model.activePlayer, model.displayOutcome, updateView);
-        data.getRank(model.setRankingOutput, updateView);
-      } else {
-        model.getOutcome(Number(playerSelection), updateView);
-        model.setRankingOutput(updateView);
-      }
-      model.viewState.newState = "disabled";
-      updateView(model.viewState);
-
-    });
-  }
 }
 
 window.addEventListener('load', init);

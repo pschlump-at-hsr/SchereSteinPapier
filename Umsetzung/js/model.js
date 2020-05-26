@@ -3,13 +3,6 @@
 let players = new Map();
 let history;
 export let activePlayer;
-const gameMatrix = [
-  [0, 1, -1, -1, 1],
-  [-1, 0, 1, -1, 1],
-  [1, -1, 0, 1, -1],
-  [1, 1, -1, 0, -1],
-  [-1, -1, 1, 1, 0]
-]
 export let viewState = {
   ranking: "",
   errMsg: "",
@@ -37,8 +30,7 @@ function getSortedPlayersMap(unsortedMap) {
   return unsortedMap;
 }
 
-export function initNewGameSession(updateView) {
-  let playerName = document.getElementById('name').value;
+export function initNewGameSession(updateView, playerName) {
   history = new Map();
   let errMsg = "";
   if (playerName < 3) {
@@ -47,7 +39,7 @@ export function initNewGameSession(updateView) {
     if (typeof players.get(playerName) === 'undefined') {
       players.set(playerName, 0);
       localStorage.setItem(playerName, '0');
-      setRankingOutput(viewState);
+      setRankingOutput(updateView);
     }
     viewState.activePlayer = playerName;
     activePlayer = playerName;
@@ -55,28 +47,6 @@ export function initNewGameSession(updateView) {
   }
   viewState.errMsg = errMsg;
   updateView(viewState);
-}
-
-export function getResultText(rng) {
-  let result;
-  switch (rng) {
-    case 0:
-      result = "Schere";
-      break;
-    case 1:
-      result = "Stein";
-      break;
-    case 2:
-      result = "Papier";
-      break;
-    case 3:
-      result = "Brunnen";
-      break;
-    case 4:
-      result = "Streichholz";
-      break;
-  }
-  return result;
 }
 
 export function displayOutcome(comResult, result, playerSelection, updateView) {
@@ -103,16 +73,10 @@ export function displayOutcome(comResult, result, playerSelection, updateView) {
     playerSelection: playerSelection,
     comSelection: comResult
   });
-  setHistoryOutput(viewState);
   viewState.outcome = outcome;
-  updateView(viewState);
-}
+  setHistoryOutput(viewState, updateView);
 
-export function getOutcome(playerSelection, updateView) {
-  let comSelection = Math.floor(Math.random() * 5);
-  let comResult = getResultText(comSelection);
-  let result = gameMatrix[playerSelection][comSelection];
-  displayOutcome(comResult, result, getResultText(Number(playerSelection)),updateView);
+
 }
 
 export function setRankingOutput(updateView, map = players) {
@@ -142,10 +106,11 @@ export function setRankingOutput(updateView, map = players) {
   updateView(viewState);
 }
 
-function setHistoryOutput() {
+function setHistoryOutput(viewState, updateView) {
   viewState.history = "<tr><th>Resultat</th><th>Spieler</th><th>Gegner</th></tr>";
   //key is not used, but necessary for it to work
   for (let [key, value] of history) {
     viewState.history += "<tr><td>" + value.res + "</td><td>" + value.playerSelection + "</td><td>" + value.comSelection + "</td></tr>";
   }
+  updateView(viewState);
 }
